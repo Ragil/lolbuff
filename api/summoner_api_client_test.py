@@ -1,5 +1,4 @@
 import unittest
-from props import config
 from summoner_api_client import SummonerAPIClient
 
 class SummonerAPIClientTest(unittest.TestCase):
@@ -7,11 +6,13 @@ class SummonerAPIClientTest(unittest.TestCase):
 
   def setUp(self):
     """Init client for test"""
-    self.client = SummonerAPIClient('oce', config.lol_api_key)
+    self.client = SummonerAPIClient("oce")
 
   def test_byName(self):
     """Test fetch by summoner name"""
-    self.client.byName("Minicat")
+    summoner = self.client.by_name("Minicat")
+    self.assertEquals(summoner.name, "Minicat")
+    self.assertEquals(summoner.summonerLevel, 30)
 
 
 if __name__ == '__main__':
