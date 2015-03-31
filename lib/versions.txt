@@ -1,0 +1,3 @@
+requests:
+  current : 460caf7
+  update : curl -OL https://github.com/kennethreitz/requests/tarball/master
