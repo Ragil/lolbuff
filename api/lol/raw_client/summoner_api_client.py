@@ -1,6 +1,6 @@
 from league_api_client import LeagueAPIClient
 from lib.requests import api as requests
-from api.models import Summoner
+from api.lol.models import Summoner
 
 class SummonerAPIClient(LeagueAPIClient):
   """Client API for Summoner endpoint

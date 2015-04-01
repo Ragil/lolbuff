@@ -1,6 +1,6 @@
 from lib.requests import api as requests
 from league_api_client import LeagueAPIClient
-from models import MatchHistory
+from api.lol.models import MatchHistory
 
 class MatchHistoryAPIClient(LeagueAPIClient):
   """API client for match history endpoint

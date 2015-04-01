@@ -1,8 +1,8 @@
 import unittest
 
 from trend import SummonerTrends
-from api.sampledata import data
-from api.models import MatchHistory
+from api.lol.sampledata import data
+from api.lol.models import MatchHistory
 
 class SummonerTrendsTest(unittest.TestCase):
   """Test for SummonerTrends"""
