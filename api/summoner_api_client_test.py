@@ -8,7 +8,7 @@ class SummonerAPIClientTest(unittest.TestCase):
     """Init client for test"""
     self.client = SummonerAPIClient("oce")
 
-  def test_byName(self):
+  def test_by_name(self):
     """Test fetch by summoner name"""
     summoner = self.client.by_name("Minicat")
     self.assertEquals(summoner.name, "Minicat")
@@ -16,4 +16,4 @@ class SummonerAPIClientTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-      unittest.main()
+  unittest.main()
