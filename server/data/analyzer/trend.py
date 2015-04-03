@@ -39,27 +39,24 @@ class Trend(object):
 class SummonerTrends(object):
   """Holds all trends for a given summoner"""
 
+  allowed_metrics = ['goldpm', 'kda', 'winrate']
+
   def __init__(self, match_history, summoner_id):
     """Init empty Trends"""
     self._match_history = match_history
     self._summoner_id = summoner_id
 
+    # FIXME - probably shouldn't precompute every trend at once, we will never
+    #         request them all at the same time anyway.
     self._trends = {
       'goldpm' : Trend("GPM", match_history, self._gpm_fn),
       'kda' : Trend("KDA", match_history, self._kda_fn),
       'winrate' : Trend("Win Rate", match_history, self._winrate_fn)
     }
 
-  def gpm(self):
-    """Return Trend for gold per minute"""
-    return self._trends['goldpm']
-
-  def kda(self):
-    """Returns Trend for kda"""
-    return self._trends['kda']
-
-  def winrate(self):
-    return self._trends['winrate']
+  def get(self, metric):
+    """Return Trend for metric"""
+    return self._trends[metric]
 
   def _gpm_fn(self, match_summary):
     """Returns gpm for the current summoner"""

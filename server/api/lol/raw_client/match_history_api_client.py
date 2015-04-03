@@ -19,10 +19,12 @@ class MatchHistoryAPIClient(LeagueAPIClient):
     self.baseURL = "https://%s.api.pvp.net/api/lol/%s/v2.2/matchhistory" % (region,
         region)
 
-  def by_summoner(self, summoner_id, start_index=0, end_index=10):
+  def by_summoner_id(self, summoner_id, start_index=0, end_index=10):
     """Fetch match history for a summoner
 
     summoner_id -- string : league summonner id
+    start_index -- int
+    end_index -- int
     """
     payload = self.base_request_payload.copy()
     match_history = MatchHistory()

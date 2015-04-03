@@ -1,0 +1,13 @@
+application : unknownapp
+runtime : python27
+version : 1
+api_version : 1
+threadsafe : true
+
+libraries:
+- name: webapp2
+  version: "latest"
+
+handlers:
+- url : /api/.*
+  script : main.api

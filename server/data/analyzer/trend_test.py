@@ -15,7 +15,7 @@ class SummonerTrendsTest(unittest.TestCase):
 
   def test_gpm(self):
     """Extract daily gpm"""
-    gpm_trend = self.trend.gpm()
+    gpm_trend = self.trend.get('goldpm')
     data = gpm_trend.data_day
     self.assertEquals(5, len(data))
     self.assertEquals((1425254400000, 353.73), data[0])
@@ -26,7 +26,7 @@ class SummonerTrendsTest(unittest.TestCase):
 
   def test_gpm_comulative(self):
     """Extract day comulative gpm"""
-    gpm_trend = self.trend.gpm()
+    gpm_trend = self.trend.get('goldpm')
     data = gpm_trend.data_day_comulative
     self.assertEquals(5, len(data))
     self.assertEquals((1425254400000, 353.73), data[0])
@@ -37,7 +37,7 @@ class SummonerTrendsTest(unittest.TestCase):
 
   def test_kda(self):
     """Extract daily kda"""
-    kda_trend = self.trend.kda()
+    kda_trend = self.trend.get('kda')
     data = kda_trend.data_day
     self.assertEquals(5, len(data))
     self.assertEquals((1425254400000, 3.91), data[0])
@@ -48,7 +48,7 @@ class SummonerTrendsTest(unittest.TestCase):
 
   def test_kda_comulative(self):
     """Extract day comulative kda"""
-    kda_trend = self.trend.kda()
+    kda_trend = self.trend.get('kda')
     data = kda_trend.data_day_comulative
     self.assertEquals(5, len(data))
     self.assertEquals((1425254400000, 3.91), data[0])
@@ -59,7 +59,7 @@ class SummonerTrendsTest(unittest.TestCase):
 
   def test_winrate(self):
     """Extract daily winrate"""
-    winrate_trend = self.trend.winrate()
+    winrate_trend = self.trend.get('winrate')
     data = winrate_trend.data_day
     self.assertEquals(5, len(data))
     self.assertEquals((1425254400000, 0.5), data[0])
@@ -70,7 +70,7 @@ class SummonerTrendsTest(unittest.TestCase):
 
   def test_winrate_comulative(self):
     """Extract day comulative winrate"""
-    winrate_trend = self.trend.winrate()
+    winrate_trend = self.trend.get('winrate')
     data = winrate_trend.data_day_comulative
     self.assertEquals(5, len(data))
     self.assertEquals((1425254400000, 0.5), data[0])
