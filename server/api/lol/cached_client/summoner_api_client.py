@@ -1,9 +1,9 @@
-from api.lol.raw_client import SummonerAPIClient as RawClient
+from api.lol.raw_client.summoner_api_client import SummonerAPIClient as RawClient
 
 class SummonerAPIClient(object):
   """Wrapper around raw client to provide caching"""
 
-  def __init__(self, region, api_key=None):
+  def __init__(self, region, api_key):
     """Init cached client
 
     region -- string : summoner-v1.4 [BR, EUNE, EUW, KR, LAN, LAS, NA, OCE, RU, TR]

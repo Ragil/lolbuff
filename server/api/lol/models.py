@@ -109,6 +109,9 @@ class MatchSummary(object):
     """Return the match day in epoch"""
     return self.matchCreation - (self.matchCreation % 86400000)
 
+  def __eq__(self, other):
+    return self.matchId == other.matchId
+
   def __hash__(self):
     """Return the match id for the summary"""
     return self.matchId

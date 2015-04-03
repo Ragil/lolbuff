@@ -12,7 +12,7 @@ class CachedMatchHistory(db.Model):
 class MatchHistoryAPIClient(object):
   """Match history api client with data caching to datastore and memcache"""
 
-  def __init__(self, region, api_key=None):
+  def __init__(self, region, api_key):
     """Create match history client
 
     region -- string :
@@ -28,7 +28,7 @@ class MatchHistoryAPIClient(object):
     start_index -- int
     end_index -- int
     """
-    return self.raw_client.by_summoner(summoner_id, start_index, end_index)
+    return self.raw_client.by_summoner_id(summoner_id, start_index, end_index)
 
   def require_prefetch(self):
     """Returns True if the value requires prefetching"""

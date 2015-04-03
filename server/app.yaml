@@ -9,5 +9,10 @@ libraries:
   version: "latest"
 
 handlers:
+
+- url : /api/admin/config/.*
+  script : main.api
+  login : admin
+
 - url : /api/.*
   script : main.api

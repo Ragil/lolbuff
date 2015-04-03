@@ -3,14 +3,15 @@ import collections
 class Trend(object):
   """Holds trends for a given metric"""
 
-  def __init__(self, metric, match_history, filter_fn):
+  def __init__(self, name, match_history, filter_fn, mode='avg'):
     """Init trend
 
-    metric -- string : the metric name
+    name -- string : the metric name
     match_history -- MatchHistory : match history
     filter_fn -- function : filter function to extract metric
+    mode -- str : ['avg', 'sum'] when multiple fall into the same bucket
     """
-    self.metric = metric
+    self.name = name
 
     day_bucket = {}
     for match_summary in match_history.matches:
@@ -21,7 +22,7 @@ class Trend(object):
 
     total = 0.0
     n = 0
-    self.data_day_comulative = []
+    self.data_day_cumulative = []
     self.data_day = []
 
     for k in sorted(day_bucket):
@@ -29,17 +30,32 @@ class Trend(object):
 
       total += sum(v)
       n += len(v)
-      self.data_day_comulative.append((k, round(total / n, 2)))
-      self.data_day.append((k, round(float(sum(v)) / len(v), 2)))
+
+      if mode == 'avg':
+        self.data_day_cumulative.append((k, round(total / n, 2)))
+        self.data_day.append((k, round(float(sum(v)) / len(v), 2)))
+
+      if mode == 'sum':
+        self.data_day_cumulative.append((k, round(total, 2)))
+        self.data_day.append((k, round(float(sum(v)), 2) ))
+
 
   def __repr__(self):
     return str(self.data_all)
+
+  def as_dict(self):
+    """Returns dict representation for json serialization"""
+    return {
+      'name' : self.name,
+      'data_day_cumulative' : self.data_day_cumulative,
+      'data_day' : self.data_day
+    }
 
 
 class SummonerTrends(object):
   """Holds all trends for a given summoner"""
 
-  allowed_metrics = ['goldpm', 'kda', 'winrate']
+  allowed_metrics = ['goldpm', 'kda', 'winrate', 'games']
 
   def __init__(self, match_history, summoner_id):
     """Init empty Trends"""
@@ -51,7 +67,8 @@ class SummonerTrends(object):
     self._trends = {
       'goldpm' : Trend("GPM", match_history, self._gpm_fn),
       'kda' : Trend("KDA", match_history, self._kda_fn),
-      'winrate' : Trend("Win Rate", match_history, self._winrate_fn)
+      'winrate' : Trend("Win Rate", match_history, self._winrate_fn),
+      'games' : Trend('Games', match_history, lambda a: 1, 'sum')
     }
 
   def get(self, metric):
@@ -67,7 +84,7 @@ class SummonerTrends(object):
     """Returns kda for the current summoner"""
     participant = match_summary.participant_by_summoner_id(self._summoner_id)
     ka = participant.stats.kills + participant.stats.assists
-    d = participant.stats.deaths
+    d = max(participant.stats.deaths, 1)
     return float(ka) / d
 
   def _winrate_fn(self, match_summary):

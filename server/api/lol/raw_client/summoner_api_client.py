@@ -1,6 +1,7 @@
+import urllib
 from league_api_client import LeagueAPIClient
-from lib.requests import api as requests
 from api.lol.models import Summoner
+from google.appengine.api import urlfetch
 
 class SummonerAPIClient(LeagueAPIClient):
   """Client API for Summoner endpoint
@@ -8,7 +9,7 @@ class SummonerAPIClient(LeagueAPIClient):
   Refer to https://developer.riotgames.com/api/methods#!/960 for more info.
   """
 
-  def __init__(self, region, api_key=None):
+  def __init__(self, region, api_key):
     """Create a client API for a particular region
 
     region -- string : summoner-v1.4 [BR, EUNE, EUW, KR, LAN, LAS, NA, OCE, RU, TR]
@@ -26,10 +27,10 @@ class SummonerAPIClient(LeagueAPIClient):
 
     return -- Summoner : a summoner object
     """
-    response = requests.get("%s/%s" % (self.byNameURL, name),
-        params=self.base_request_payload)
-    if response.status_code < 300:
-      return Summoner(response.text)
+    response = urlfetch.fetch("%s/%s?%s" % (self.byNameURL, name,
+        urllib.urlencode(self.base_request_payload)))
+    if response.status_code < 300 and response.status_code >= 200:
+      return Summoner(response.content)
 
-    raise RuntimeError(response.json())
+    raise RuntimeError(response.content)
 

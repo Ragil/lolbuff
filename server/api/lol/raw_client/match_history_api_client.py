@@ -1,6 +1,8 @@
-from lib.requests import api as requests
+import urllib
+import logging
 from league_api_client import LeagueAPIClient
 from api.lol.models import MatchHistory
+from google.appengine.api import urlfetch
 
 class MatchHistoryAPIClient(LeagueAPIClient):
   """API client for match history endpoint
@@ -8,7 +10,7 @@ class MatchHistoryAPIClient(LeagueAPIClient):
   Refer to https://developer.riotgames.com/api/methods#!/978/3338 for more info
   """
 
-  def __init__(self, region, api_key=None):
+  def __init__(self, region, api_key):
     """Create match history client
 
     region -- string :
@@ -30,21 +32,20 @@ class MatchHistoryAPIClient(LeagueAPIClient):
     match_history = MatchHistory()
 
     # the api only allows a window of 10 games at a time
-    for end in xrange(start_index, end_index, 10):
-
+    for start in xrange(start_index, end_index, 10):
       payload.update({
-        "beginIndex" : start_index,
-        "endIndex" : min(end_index, end)
+        "beginIndex" : start,
+        "endIndex" : min(end_index, start + 10)
       })
 
-      response = requests.get("%s/%s" % (self.baseURL, summoner_id),
-          params = self.base_request_payload)
+      response = urlfetch.fetch("%s/%s?%s" % (self.baseURL, summoner_id,
+          urllib.urlencode(payload)))
 
       # fail to make request
       if response.status_code >= 300:
-        raise RuntimeError(response.json())
+        raise RuntimeError(response.content)
 
-      new_history = MatchHistory(response.text)
+      new_history = MatchHistory(response.content)
 
       # no more data, break early
       if not new_history.matches:
