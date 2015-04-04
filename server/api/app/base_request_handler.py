@@ -6,18 +6,18 @@ import props
 class BaseRequestHandler(webapp2.RequestHandler):
   """Providing common helpers and decorators for request handlers"""
 
+  regions = ['br', 'eune', 'euw', 'kr', 'lan', 'las', 'na', 'oce', 'ru', 'tr']
+
   def __init__(self, request, response):
     """Initialize handler"""
     self.config = props.get_config()
     self.initialize(request, response)
-    self._regions = ['br', 'eune', 'euw', 'kr', 'lan',
-        'las', 'na', 'oce', 'ru', 'tr']
 
   def has_valid_region(self):
     """Return True if the request has a valid region parameter. False otherwise."""
-    if self.request.get('region') not in self._regions:
-      self.bad_request('Invalid region "%s". Valid regions %s' %
-          (self.request.get('region'), self._regions))
+    if self.request.get('region') not in self.regions:
+      self.bad_request('Invalid region "%s". Valid regions : %s' %
+          (self.request.get('region'), self.regions))
       return False
 
     return True

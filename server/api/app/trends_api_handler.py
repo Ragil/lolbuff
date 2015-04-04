@@ -24,16 +24,22 @@ class TrendResponse(object):
 class Handler(BaseRequestHandler):
   """Handles trends statistics"""
 
-  def __init__(self, request, response):
+  def __init__(self, request, response,
+      _match_history_clients=None, _summoner_api_clients=None):
     """Initialize league api clients"""
     super(Handler, self).__init__(request, response)
 
-    self._match_history_clients = dict(
-        (region, MatchHistoryAPIClient(region,
-            self.config.lol_api_key)) for region in self._regions )
-    self._summoner_api_clients = dict(
-        (region, SummonerAPIClient(region,
-            self.config.lol_api_key)) for region in self._regions )
+    self._match_history_clients = _match_history_clients
+    if not self._match_history_clients:
+      self._match_history_clients = dict(
+          (region, MatchHistoryAPIClient(region,
+              self.config.lol_api_key)) for region in self.regions )
+
+    self._summoner_api_clients = _summoner_api_clients
+    if not self._summoner_api_clients:
+      self._summoner_api_clients = dict(
+          (region, SummonerAPIClient(region,
+              self.config.lol_api_key)) for region in self.regions )
 
   @BaseRequestHandler.ensure_param('region')
   @BaseRequestHandler.ensure_param('summoner_name')
@@ -49,18 +55,22 @@ class Handler(BaseRequestHandler):
       return
 
     if metric not in SummonerTrends.allowed_metrics:
-      self.bad_request('Metric "%s" not supported. Supported metrics : %s' %
+      self.bad_request('Invalid metric "%s". Valid metrics : %s' %
           (metric, SummonerTrends.allowed_metrics))
       return
 
     summoner = self._summoner_api_clients[region].by_name(summoner_name)
     if not summoner:
-      self.bad_request('Summoner "%s" not found.')
+      self.bad_request('Summoner "%s" not found.' % summoner_name)
       return
 
-    match_history = self._match_history_clients[region].by_summoner_id(
-        summoner.id, 0, 200)
-
     response_data = TrendResponse()
-    response_data.trend = SummonerTrends(match_history, summoner.id).get(metric)
+    history_client = self._match_history_clients[region]
+
+    if history_client.require_prefetch(summoner.id):
+      response_data.prefetching = True
+    else:
+      match_history = history_client.by_summoner_id(summoner.id, 0, 200)
+      response_data.trend = SummonerTrends(match_history, summoner.id).get(metric)
+
     self.respond_as_json(response_data.as_dict(), 200)
