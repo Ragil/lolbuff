@@ -1,13 +1,11 @@
 {
-  "name": "Essential React",
-  "description": "A minimal skeleton for building testable React apps using ES6",
+  "name": "lolbuff",
+  "description": "Stats app for league",
   "keywords": [
-    "react",
-    "es6",
-    "starter"
+    "league",
+    "es6"
   ],
-  "repository": "https://github.com/pheuter/essential-react",
-  "logo": "https://dl.dropboxusercontent.com/u/1803181/essential-react-logo.png",
+  "repository": "https://github.com/Ragil/lolbuff.git",
   "env": {
     "PRODUCTION": "true"
   }
