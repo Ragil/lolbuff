@@ -9,26 +9,17 @@ import "babel-core/polyfill";
 import React from "react";
 import Router from "react-router";
 
-// Common utilities
-import Session from "./common/session";
-
 // Routers
-import LoggedOutRouter from "./routers/logged_out";
-import LoggedInRouter from "./routers/logged_in";
+import AppRouter from "./routers/app";
 
 
 // ID of the DOM element to mount app on
 const DOM_APP_EL_ID = "app";
 
 
-// Initialize routes depending on session
-let routes;
+// Initialize routes
+let routes = AppRouter.getRoutes();
 
-if (Session.isLoggedIn()) {
-  routes = LoggedInRouter.getRoutes();
-} else {
-  routes = LoggedOutRouter.getRoutes();
-}
 
 /**
  * Given a set of routes and params associated with the current active state,
@@ -76,7 +67,6 @@ let fetchData = function(routes, params) {
 
 // Start the router
 Router.run(routes, Router.HistoryLocation, function(Handler, state) {
-  fetchData(state.routes, state.params).then((data) => {
-    React.render(<Handler data={data} />, document.getElementById(DOM_APP_EL_ID));
-  });
+  React.render(<Handler routestate={state} />,
+      document.getElementById(DOM_APP_EL_ID));
 });

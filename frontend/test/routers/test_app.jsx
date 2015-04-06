@@ -2,27 +2,27 @@ import React from "react/addons";
 import { RouteHandler } from "react-router";
 let { TestUtils } = React.addons;
 
+
 import stubRouterContext from "./stub_router_context";
-import LoggedOutRouter from "../../src/routers/logged_out";
+import AppRouter from "../../src/routers/app";
 
 
-describe("LoggedOut Router", function() {
-  let loggedOutRouterComponent;
+describe("LoggedIn Router", function() {
+  let routerComponent;
 
   beforeEach(function() {
-    let StubbedLoggedOutRouter = stubRouterContext(LoggedOutRouter);
-    loggedOutRouterComponent = TestUtils.renderIntoDocument(<StubbedLoggedOutRouter />);
+    let StubbedLoggedInRouter = stubRouterContext(AppRouter);
+    routerComponent = TestUtils.renderIntoDocument(<StubbedLoggedInRouter />);
   });
 
   it("should return routes", function() {
-    let routes = LoggedOutRouter.getRoutes();
-
+    let routes = AppRouter.getRoutes();
     expect(routes).to.exist;
   });
 
   it("should include <RouterHandler> component", function() {
     let handler = TestUtils.findRenderedComponentWithType(
-      loggedOutRouterComponent, RouteHandler);
+      routerComponent, RouteHandler);
 
       expect(handler).to.exist;
   });

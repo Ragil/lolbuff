@@ -1,5 +1,13 @@
 # Build
 build/app.js
+build/*.jpg
+build/*.png
+build/*.gif
+build/*.woff
+build/*.woff2
+build/*.eot
+build/*.svg
+build/*.ttf
 
 # Logs
 logs
@@ -16,3 +24,6 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# vim swap files
+*.swp
