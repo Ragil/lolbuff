@@ -1,5 +1,5 @@
 import React from "react";
-import pusheen_url from "../../assets/pusheen.gif";
+import pusheen_url from "./../../assets/pusheen.gif";
 import "!style!css!less!./pusheen_loader.less";
 
 export default class PusheenLoader extends React.Component {

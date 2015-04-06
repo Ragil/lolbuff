@@ -5,6 +5,9 @@
  *
  * For more info, see: http://karma-runner.github.io/0.12/config/configuration-file.html
  */
+
+var webpack_loaders = require('./webpack.loaders');
+
 module.exports = function(config) {
   config.set({
 
@@ -68,9 +71,7 @@ module.exports = function(config) {
      */
     webpack: {
       module: {
-        loaders: [
-          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader"}
-        ],
+        loaders: webpack_loaders,
         postLoaders: [{
           test: /\.jsx?$/,
           exclude: /(test|node_modules)\//,

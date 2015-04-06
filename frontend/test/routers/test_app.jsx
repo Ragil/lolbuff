@@ -11,8 +11,8 @@ describe("LoggedIn Router", function() {
   let routerComponent;
 
   beforeEach(function() {
-    let StubbedLoggedInRouter = stubRouterContext(AppRouter);
-    routerComponent = TestUtils.renderIntoDocument(<StubbedLoggedInRouter />);
+    let StubbedAppRouter = stubRouterContext(AppRouter);
+    routerComponent = TestUtils.renderIntoDocument(<StubbedAppRouter />);
   });
 
   it("should return routes", function() {
