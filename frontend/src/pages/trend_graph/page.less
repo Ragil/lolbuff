@@ -6,35 +6,41 @@
 
     margin-left : auto;
     margin-right : auto;
+  }
 
-    .trend-graph-rollover-text {
-      position : relative;
-      top : 10px;
-      height : 25px;
+  .mg-chart-title {
+    display : inline;
+    font-size : 15px;
+    float : left;
+    margin-left : 20px;
+    margin-top : 0px;
+    margin-bottom : 0px;
+    padding : 0px;
 
-      float : right;
-      margin-right : 20px;
-    }
+    position : relative;
+    top : 12px;
+  }
+
+  .trend-graph-rollover-text, .trend-graph-legend {
+    position : relative;
+    top : 10px;
+    height : 25px;
+  }
+
+  .trend-graph-rollover-text {
+    float : right;
+    margin-right : 20px;
+  }
+
+  .trend-graph-legend {
+    float : left;
+    margin-left : 20px;
+    z-index : 1000;
+    cursor : pointer;
   }
 
   svg {
     position : relative;
     top : -30px;
-
-    text {
-      fill : black;
-    }
-  }
-
-  .mg-x-axis line, .mg-y-axis line {
-    opacity : 1;
-    shape-rendering : auto;
-    stroke : steelblue;
-    stroke-width : 1px;
-  }
-
-  .mg-line1-color {
-    stroke : steelblue;
-    stroke-width : 2px;
   }
 }

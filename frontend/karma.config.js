@@ -7,6 +7,7 @@
  */
 
 var webpack_loaders = require('./webpack.loaders');
+var path = require('path');
 
 module.exports = function(config) {
   config.set({
@@ -79,6 +80,10 @@ module.exports = function(config) {
         }]
       },
       resolve: {
+        root : path.resolve(__dirname, '.'),
+        alias : {
+          'env' : 'src/common/env_local.js'
+        },
         extensions: ['', '.js', '.jsx']
       }
     },

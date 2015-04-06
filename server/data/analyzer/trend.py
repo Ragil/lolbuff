@@ -68,7 +68,7 @@ class SummonerTrends(object):
       'goldpm' : Trend("GPM", match_history, self._gpm_fn),
       'kda' : Trend("KDA", match_history, self._kda_fn),
       'winrate' : Trend("Win Rate", match_history, self._winrate_fn),
-      'games' : Trend('Games', match_history, lambda a: 1, 'sum')
+      'games' : Trend('Games Played', match_history, lambda a: 1, 'sum')
     }
 
   def get(self, metric):

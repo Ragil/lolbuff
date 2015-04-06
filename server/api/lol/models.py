@@ -142,8 +142,10 @@ class MatchHistory(object):
 
     if raw_data:
       data = json.loads(raw_data)
-      self.matches = [
-          MatchSummary(summary_data) for summary_data in data["matches"] ]
+
+      if "matches" in data:
+        self.matches = [
+            MatchSummary(summary_data) for summary_data in data["matches"] ]
 
   def update(self, other_history):
     """Modify the current history with data from other history

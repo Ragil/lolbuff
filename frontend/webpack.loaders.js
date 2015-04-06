@@ -1,4 +1,6 @@
 module.exports = [
+  { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
+
   { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" },
   { test: /\.(gif|png|jpg)$/, loader: 'url-loader?limit=8192' },
 

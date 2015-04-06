@@ -30,6 +30,6 @@ class MatchHistoryAPIClient(object):
     """
     return self.raw_client.by_summoner_id(summoner_id, start_index, end_index)
 
-  def require_prefetch(self):
+  def require_prefetch(self, summoner_id):
     """Returns True if the value requires prefetching"""
     return False

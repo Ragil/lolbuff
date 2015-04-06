@@ -11,12 +11,16 @@ export default class SearchPage extends React.Component {
             <h4>League Buff</h4>
           </div>
           <div className="col-xs-8 col-sm-8 col-md-9 col-lg-9">
-            <SearchComponent value={this.props.routestate.query['q']}/>
+            <SearchComponent value={this.props.routestate.query['summoner_name']}
+                region={this.props.routestate.query['region']} />
           </div>
         </div>
 
         <div className="row">
-          <TrendPage {... this.props} />
+          <TrendPage {... this.props}
+              region={this.props.routestate.query['region']}
+              metric={this.props.routestate.query['metric']}
+              summoner_name={this.props.routestate.query['summoner_name']}/>
         </div>
       </div>
     );

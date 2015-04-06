@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var webpack_loaders = require('./webpack.loaders');
+var path = require('path');
 
 /**
  * This is the Webpack configuration file for production.
@@ -17,6 +18,10 @@ module.exports = {
   },
 
   resolve: {
+    root : path.resolve(__dirname, '.'),
+    alias : {
+      'env' : 'src/common/env_prod.js'
+    },
     extensions: ['', '.js', '.jsx']
   }
 }

@@ -29,6 +29,9 @@ class Handler(BaseRequestHandler):
     """Initialize league api clients"""
     super(Handler, self).__init__(request, response)
 
+    # Allow access to api from all domains
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+
     self._match_history_clients = _match_history_clients
     if not self._match_history_clients:
       self._match_history_clients = dict(
@@ -70,7 +73,7 @@ class Handler(BaseRequestHandler):
     if history_client.require_prefetch(summoner.id):
       response_data.prefetching = True
     else:
-      match_history = history_client.by_summoner_id(summoner.id, 0, 200)
+      match_history = history_client.by_summoner_id(summoner.id, 0, 20)
       response_data.trend = SummonerTrends(match_history, summoner.id).get(metric)
 
     self.respond_as_json(response_data.as_dict(), 200)

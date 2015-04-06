@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var webpack_loaders = require('./webpack.loaders');
+var path = require('path');
 
 /**
  * This is the Webpack configuration file for local development. It contains
@@ -17,7 +18,7 @@ module.exports = {
   devtool: "eval",
 
   // Set entry point to ./src/main and include necessary files for hot load
-  entry:  [
+  entry: [
     "webpack-dev-server/client?http://localhost:9090",
     "webpack/hot/only-dev-server",
     "./src/main"
@@ -44,6 +45,10 @@ module.exports = {
 
   // Automatically transform files with these extensions
   resolve: {
+    root : path.resolve(__dirname, '.'),
+    alias : {
+      'env' : 'src/common/env_local.js'
+    },
     extensions: ['', '.js', '.jsx']
   }
 }
