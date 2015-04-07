@@ -20,7 +20,7 @@ export default class PusheenLoader extends React.Component {
 
       spinner = (
         <div className="pusheen-container" style={{
-            width : this.props.pusheenCount * 262
+            width : Math.min(3, this.props.pusheenCount) * 262
           }} >
           {pusheen}
         </div>
