@@ -12,9 +12,8 @@ export default class MetricSelector extends React.Component {
       let name = metrics[key];
       let btnClass = "btn " +
           (this.props.selectedMetric === key ? "btn-primary" : "btn-default");
-      console.log(this.props.selectedMetric + ' ' + key + ' ' + btnClass);
       return (
-        <button type="button" className={btnClass}
+        <button type="button" className={btnClass} key={key}
             onClick={() => this.selectMetric.apply(this, [key])}>{name}</button>
       );
     });

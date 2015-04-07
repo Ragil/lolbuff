@@ -58,7 +58,7 @@ export default class TrendGraph extends React.Component {
       target : '.trend-graph-svg-container',
       x_accessor : 'date',
       y_accessor : 'value',
-      xax_format : ((d) => moment(d.date).format('YYYY-MM-DD')),
+      xax_format : ((d) => moment(d).format('YYYY-MM-DD')),
 
       // custom rollover text
       show_rollover_text : false,
