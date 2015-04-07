@@ -34,8 +34,8 @@ module.exports = {
 
   // Necessary plugins for hot load
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
+    // new webpack.NoErrorsPlugin()
   ],
 
   // Transform source code using Babel and React Hot Loader

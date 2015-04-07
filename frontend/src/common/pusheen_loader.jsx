@@ -15,7 +15,7 @@ export default class PusheenLoader extends React.Component {
 
       for (let i = 0; i < Math.min(3, this.props.pusheenCount); i++) {
         let url = sleeping === i ? pusheen_sleeping_url : pusheen_url;
-        pusheen.push(<img src={url} className="pusheen-img" />);
+        pusheen.push(<img src={url} className="pusheen-img" key={i} />);
       }
 
       spinner = (

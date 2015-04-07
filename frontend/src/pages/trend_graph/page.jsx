@@ -20,8 +20,8 @@ export default class TrendGraph extends React.Component {
       <div id="trend-graph">
         <div className="trend-graph-svg-container"
             style={{
-              width : (this.props.width + 20) + 'px',
-              height : (this.props.height) + 'px'
+              width : '100%',
+              height : (this.props.height)
             }}>
           <div className="trend-graph-legend">
             <span className="mg-line1-legend-color">-- daily </span>
@@ -56,8 +56,6 @@ export default class TrendGraph extends React.Component {
       title : this.props.trend.name,
       data : data,
       missing_is_hidden : false,
-      width : this.props.width,
-      height : this.props.height,
       target : '.trend-graph-svg-container',
       x_accessor : 'date',
       y_accessor : 'value',
@@ -91,7 +89,6 @@ export default class TrendGraph extends React.Component {
 }
 
 TrendGraph.propTypes = {
-  width : React.PropTypes.number.isRequired,
   height : React.PropTypes.number.isRequired,
   metric : React.PropTypes.string.isRequired,
   trend : React.PropTypes.object.isRequired

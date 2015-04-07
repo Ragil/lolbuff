@@ -4,6 +4,7 @@ import TrendGraph from "../trend_graph/page";
 import $ from 'jquery';
 import env from 'env';
 import moment from 'moment/moment';
+import '!style!css!less!./page.less';
 
 export default class TrendPage extends React.Component {
 
@@ -21,10 +22,10 @@ export default class TrendPage extends React.Component {
     let content;
 
     if (this.state.fetched && !this.state.error) {
-      content = <TrendGraph width={600} height={300}
+      content = <TrendGraph height={300}
           trend={this.state.data.trend} {... this.props} />
     } else if (this.state.fetched && this.state.error) {
-      content = <h1>{this.state.error.error_msg}</h1>
+      content = <div className="trend-error">{this.state.error.error_msg}</div>
     } else {
       let timeSinceLoad = this.state.ts_lastFetchUpdate - this.state.ts_startFetch;
       let pusheenCount = parseInt(timeSinceLoad / 5000, 10);
@@ -44,7 +45,9 @@ export default class TrendPage extends React.Component {
 
     return (
       <div id="trend-page">
-        {content}
+        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          {content}
+        </div>
       </div>
     );
   }
@@ -57,7 +60,7 @@ export default class TrendPage extends React.Component {
         });
         this.updateFetchTimer();
       }
-    }).bind(this), 1000);
+    }).bind(this), 2500);
   }
 
   fetchData() {
@@ -67,6 +70,8 @@ export default class TrendPage extends React.Component {
 
     this.setState({
       fetching : true,
+      error : undefined,
+      data : undefined,
       ts_startFetch : moment().valueOf(),
       ts_lastFetchUpdate : moment().valueOf()
     });
@@ -75,11 +80,11 @@ export default class TrendPage extends React.Component {
       'region' : this.props.region,
       'metric' : this.props.metric,
       'summoner_name' : this.props.summoner_name
-    })).success((data, status, jqXHR) => {
+    })).done((data, status, jqXHR) => {
       this.setState({ data : data });
     }).fail((jqXHR, status, error) => {
       this.setState({ error : jqXHR.responseJSON });
-    }).done(() => {
+    }).always(() => {
       this.setState({
         fetched : true,
         fetching : false,

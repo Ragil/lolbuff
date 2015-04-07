@@ -3,7 +3,7 @@
 
   .dropdown {
     display : table-cell;
-    vertical-align : top;
+    vertical-align : middle;
 
     .caret {
       margin-left : 5px;
@@ -12,6 +12,13 @@
     a:hover {
       cursor : pointer;
     }
+
+    .btn {
+      border-top-right-radius : 0px;
+      border-bottom-right-radius : 0px;
+      border-right : 0px;
+      float : right;
+    }
   }
 
   .input-container {
@@ -19,6 +26,11 @@
 
     .input-group {
       width : 100%;
+    }
+
+    input {
+      border-bottom-left-radius : 0px;
+      border-top-left-radius : 0px;
     }
   }
 }

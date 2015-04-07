@@ -62,9 +62,14 @@ class Handler(BaseRequestHandler):
           (metric, SummonerTrends.allowed_metrics))
       return
 
-    summoner = self._summoner_api_clients[region].by_name(summoner_name)
-    if not summoner:
-      self.bad_request('Summoner "%s" not found.' % summoner_name)
+    summoner = None
+    try:
+      summoner = self._summoner_api_clients[region].by_name(summoner_name)
+    except RuntimeError:
+      self.bad_request('Summoner "%s" not found in region "%s"' %
+          (summoner_name, region))
+      logging.info('Summoner "%s" not found in region "%s"' %
+          (summoner_name, region))
       return
 
     response_data = TrendResponse()
@@ -73,7 +78,7 @@ class Handler(BaseRequestHandler):
     if history_client.require_prefetch(summoner.id):
       response_data.prefetching = True
     else:
-      match_history = history_client.by_summoner_id(summoner.id, 0, 10)
+      match_history = history_client.by_summoner_id(summoner.id, 0, 30)
       response_data.trend = SummonerTrends(match_history, summoner.id).get(metric)
 
     self.respond_as_json(response_data.as_dict(), 200)
