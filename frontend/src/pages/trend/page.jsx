@@ -101,7 +101,10 @@ export default class TrendPage extends React.Component {
     })).done((data, status, jqXHR) => {
       this.setState({ data : data });
     }).fail((jqXHR, status, error) => {
-      this.setState({ error : jqXHR.responseJSON });
+      this.setState({
+        error : jqXHR.responseJSON ?
+            jqXHR.responseJSON : { error_msg : '): the server is broken :(' }
+      });
     }).always(() => {
       this.setState({
         fetched : true,

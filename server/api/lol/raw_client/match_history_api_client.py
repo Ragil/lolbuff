@@ -1,5 +1,6 @@
 import urllib
 import logging
+import time
 from league_api_client import LeagueAPIClient
 from api.lol.models import MatchHistory
 from google.appengine.api import urlfetch
@@ -38,12 +39,27 @@ class MatchHistoryAPIClient(LeagueAPIClient):
         "endIndex" : min(end_index, start + 10)
       })
 
-      response = urlfetch.fetch("%s/%s?%s" % (self.baseURL, summoner_id,
-          urllib.urlencode(payload)))
+      # we retry three times with exponential back off
+      # to account for cases where we get rate limited
+      response = None
+      attempt = 0
+      while not response:
+        attempt += 1
+        response = urlfetch.fetch("%s/%s?%s" % (self.baseURL, summoner_id,
+            urllib.urlencode(payload)))
 
-      # fail to make request
-      if response.status_code >= 300:
-        raise RuntimeError(response.content)
+        # fail to make request
+        if response.status_code >= 300:
+          if attempt >= 3:
+            raise RuntimeError(response.content)
+
+          # wait a bit
+          delay = pow(2.0, attempt - 1) / 2
+          logging.warning('Retrying request with delay %s because %s' %
+              (delay, response.content))
+          time.sleep(delay)
+          response = None
+
 
       new_history = MatchHistory(response.content)
 

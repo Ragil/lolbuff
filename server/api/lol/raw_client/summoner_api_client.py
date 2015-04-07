@@ -29,6 +29,10 @@ class SummonerAPIClient(LeagueAPIClient):
     """
     response = urlfetch.fetch("%s/%s?%s" % (self.byNameURL, name,
         urllib.urlencode(self.base_request_payload)))
+
+    if response.status_code == 404:
+      return None
+
     if response.status_code < 300 and response.status_code >= 200:
       return Summoner(response.content)
 
