@@ -53,7 +53,6 @@ export default class TrendGraph extends React.Component {
     }
 
     MG.data_graphic({
-      title : this.props.trend.name,
       data : data,
       missing_is_hidden : false,
       target : '.trend-graph-svg-container',
