@@ -16,3 +16,11 @@ handlers:
 
 - url : /api/.*
   script : main.api
+
+- url : /(.*?\.)(js|css|eot|woff2|woff|ttf|jpg|png|svg|gif)
+  static_files : static/\1\2
+  upload : static/.*
+
+- url : /.*
+  static_files : static/index.html
+  upload : static/index.html
