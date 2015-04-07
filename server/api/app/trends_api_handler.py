@@ -73,7 +73,7 @@ class Handler(BaseRequestHandler):
     if history_client.require_prefetch(summoner.id):
       response_data.prefetching = True
     else:
-      match_history = history_client.by_summoner_id(summoner.id, 0, 20)
+      match_history = history_client.by_summoner_id(summoner.id, 0, 10)
       response_data.trend = SummonerTrends(match_history, summoner.id).get(metric)
 
     self.respond_as_json(response_data.as_dict(), 200)

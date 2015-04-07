@@ -44,8 +44,10 @@
     "moment": "^2.9.0",
     "phantomjs": "^1.9.16",
     "react-hot-loader": "^1.2.3",
+    "spin": "^0.0.1",
     "webpack-dev-server": "^1.7.0",
 
+    "jsx-loader": "^0.13.1",
     "json-loader": "^0.5.1",
     "imports-loader": "^0.6.3",
     "less-loader": "^2.2.0",

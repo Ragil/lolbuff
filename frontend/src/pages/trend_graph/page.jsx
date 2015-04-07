@@ -42,7 +42,6 @@ export default class TrendGraph extends React.Component {
 
   drawGraph() {
     let data = [this.props.trend.data_day, this.props.trend.data_day_cumulative];
-    console.log(this.state.hidden);
     data = data.filter((d, i) => !this.state.hidden[i]);
     data = data.map((group) => {
       return group.map((d) => {

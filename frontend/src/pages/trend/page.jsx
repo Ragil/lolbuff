@@ -3,13 +3,17 @@ import PusheenLoader from "../../common/pusheen_loader";
 import TrendGraph from "../trend_graph/page";
 import $ from 'jquery';
 import env from 'env';
+import moment from 'moment/moment';
 
 export default class TrendPage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      'fetched' : false
+      'fetched' : false,
+      'fetching' : false,
+      'ts_startFetch' : undefined,
+      'ts_lastFetchUpdate' : undefined
     };
   }
 
@@ -22,7 +26,20 @@ export default class TrendPage extends React.Component {
     } else if (this.state.fetched && this.state.error) {
       content = <h1>{this.state.error.error_msg}</h1>
     } else {
-      content = <PusheenLoader msg="Generating data for the first time ..." />;
+      let timeSinceLoad = this.state.ts_lastFetchUpdate - this.state.ts_startFetch;
+      let pusheenCount = parseInt(timeSinceLoad / 5000, 10);
+      let msg = "Generating data for the first time ...";
+      if (pusheenCount === 1) {
+        msg = "This is what's currently happening in the background ...";
+      } else if (pusheenCount === 2) {
+        msg = "We've doubled the power! Almost done ...";
+      } else if (pusheenCount === 3) {
+        msg = "You have lots of games. All of our staff are working on it!";
+      } else if (pusheenCount > 3) {
+        msg = "This is hard ... we need ZzzZzzZzzZzz";
+      }
+
+      content = <PusheenLoader pusheenCount={pusheenCount} msg={msg} />;
     }
 
     return (
@@ -32,22 +49,46 @@ export default class TrendPage extends React.Component {
     );
   }
 
+  updateFetchTimer() {
+    window.setTimeout((() => {
+      if (this.state.fetching) {
+        this.setState({
+          ts_lastFetchUpdate : moment().valueOf()
+        });
+        this.updateFetchTimer();
+      }
+    }).bind(this), 1000);
+  }
+
   fetchData() {
+    if (this.state.fetched || this.state.fetching) {
+      return;
+    }
+
+    this.setState({
+      fetching : true,
+      ts_startFetch : moment().valueOf(),
+      ts_lastFetchUpdate : moment().valueOf()
+    });
+
     $.ajax(env.api_url + '/api/trends?' + $.param({
       'region' : this.props.region,
       'metric' : this.props.metric,
       'summoner_name' : this.props.summoner_name
     })).success((data, status, jqXHR) => {
-      this.setState({
-        data : data,
-        fetched : true
-      });
+      this.setState({ data : data });
     }).fail((jqXHR, status, error) => {
+      this.setState({ error : jqXHR.responseJSON });
+    }).done(() => {
       this.setState({
-        error : jqXHR.responseJSON,
-        fetched : true
+        fetched : true,
+        fetching : false,
+        ts_startFetch : undefined,
+        ts_lastFetchUpdate : undefined
       });
     });
+
+    this.updateFetchTimer();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,10 +102,7 @@ export default class TrendPage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.state.fetched) {
-      this.fetchData();
-      return;
-    }
+    this.fetchData();
   }
 }
 
