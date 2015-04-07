@@ -39,7 +39,7 @@ class MatchHistoryAPIClient(LeagueAPIClient):
         "endIndex" : min(end_index, start + 10)
       })
 
-      # we retry three times with exponential back off
+      # we retry with exponential back off
       # to account for cases where we get rate limited
       response = None
       attempt = 0
@@ -50,11 +50,11 @@ class MatchHistoryAPIClient(LeagueAPIClient):
 
         # fail to make request
         if response.status_code >= 300:
-          if attempt >= 3:
+          if attempt >= 4:
             raise RuntimeError(response.content)
 
           # wait a bit
-          delay = pow(2.0, attempt - 1) / 2
+          delay = pow(2.0, attempt - 1)
           logging.warning('Retrying request with delay %s because %s' %
               (delay, response.content))
           time.sleep(delay)

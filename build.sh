@@ -10,5 +10,6 @@ npm run test
 npm run build
 
 cd ..
+rm -rf server/static
 mkdir -p server/static
 cp -r frontend/build/*  server/static/
