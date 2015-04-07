@@ -94,7 +94,7 @@ class HandlerTest(unittest.TestCase):
       'summoner_name' : 'invalid_name',
       'metric' : 'goldpm'
     }, 400, {
-      'error_msg' : 'Summoner "invalid_name" not found.'
+      'error_msg' : 'Summoner "invalid_name" not found in region "oce"'
     }, summoner_api_clients = {
       'oce' : mock_client
     })

@@ -12,15 +12,17 @@ export default class PusheenLoader extends React.Component {
       let pusheen = [];
       let sleeping = this.props.pusheenCount > 3 ?
           Math.floor(Math.random() * 3) : -1;
+      let toDraw = Math.min(3, this.props.pusheenCount);
 
-      for (let i = 0; i < Math.min(3, this.props.pusheenCount); i++) {
+      for (let i = 0; i < toDraw; i++) {
         let url = sleeping === i ? pusheen_sleeping_url : pusheen_url;
-        pusheen.push(<img src={url} className="pusheen-img" key={i} />);
+        pusheen.push(<img src={url} className="pusheen-img" key={i}
+            style={{ width : (100 / toDraw) + '%'}} />);
       }
 
       spinner = (
         <div className="pusheen-container" style={{
-            width : Math.min(3, this.props.pusheenCount) * 262
+            width : (100 / 3 * toDraw) + '%'
           }} >
           {pusheen}
         </div>
