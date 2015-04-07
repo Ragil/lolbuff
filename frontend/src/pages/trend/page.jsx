@@ -1,6 +1,7 @@
 import React from "react";
 import PusheenLoader from "../../common/pusheen_loader";
 import TrendGraph from "../trend_graph/page";
+import MetricSelector from "../../common/metric_selector";
 import $ from 'jquery';
 import env from 'env';
 import moment from 'moment/moment';
@@ -22,14 +23,31 @@ export default class TrendPage extends React.Component {
     let content;
 
     if (this.state.fetched && !this.state.error) {
-      content = <TrendGraph height={300}
-          trend={this.state.data.trend} {... this.props} />
+
+      content = (
+        <div>
+          <MetricSelector {... this.props}
+              summonerName={this.props.summoner_name}
+              region={this.props.region}
+              selectedMetric={this.props.metric} />
+
+          <TrendGraph height={300}
+            trend={this.state.data.trend} {... this.props} />
+        </div>
+      );
+
     } else if (this.state.fetched && this.state.error) {
+
+      // error message
       content = <div className="trend-error">{this.state.error.error_msg}</div>
+
     } else {
+
+      // spinner configuration
       let timeSinceLoad = this.state.ts_lastFetchUpdate - this.state.ts_startFetch;
       let pusheenCount = parseInt(timeSinceLoad / 5000, 10);
       let msg = "Generating data for the first time ...";
+
       if (pusheenCount === 1) {
         msg = "This is what's currently happening in the background ...";
       } else if (pusheenCount === 2) {
@@ -115,7 +133,4 @@ TrendPage.propTypes = {
   region : React.PropTypes.string.isRequired,
   metric : React.PropTypes.string.isRequired,
   summoner_name : React.PropTypes.string.isRequired
-};
-TrendPage.defaultProps = {
-  metric : 'goldpm'
 };

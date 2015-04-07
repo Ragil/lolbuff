@@ -38,7 +38,7 @@ class MatchHistoryAPIClient(object):
         summoner_id, start_index, end_index)
 
     if match_history:
-      memcache.set(key, match_history, time=600)
+      memcache.set(key, match_history, time=3600)
 
     return match_history
 

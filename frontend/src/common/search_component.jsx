@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/js/dropdown";
 import "!style!css!less!./search_component.less";
+import regions from "./regions";
 
 export default class SearchComponent extends React.Component {
 
@@ -12,8 +13,6 @@ export default class SearchComponent extends React.Component {
   }
 
   render() {
-    let regions = ['br', 'eune', 'euw', 'kr', 'lan',
-        'las', 'na', 'oce', 'ru', 'tr'];
     let options = regions.map((region) => {
       return (
         <li role="presentation" key={region}>
