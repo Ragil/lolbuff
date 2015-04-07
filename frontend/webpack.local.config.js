@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var webpack_loaders = require('./webpack.loaders');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 
 /**
@@ -34,7 +35,12 @@ module.exports = {
 
   // Necessary plugins for hot load
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      filename : 'index.html',
+      template : './index.html',
+      hash : new Date().valueOf()
+    })
     // new webpack.NoErrorsPlugin()
   ],
 

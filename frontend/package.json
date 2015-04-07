@@ -4,12 +4,12 @@
   "description": "A minimal skeleton for building testable React apps using ES6.",
   "main": "src/main.jsx",
   "scripts": {
-    "server": "node server.js",
+    "server": "webpack --config webpack.local.config.js; node server.js",
     "build": "webpack -p --config webpack.production.config.js",
     "test": "PHANTOMJS_BIN=./node_modules/.bin/phantomjs ./node_modules/karma/bin/karma start karma.config.js",
     "test-cross-browser": "./node_modules/karma/bin/karma start karma.cross-browser.config.js",
     "coveralls": "cat coverage/lcov.info | coveralls",
-    "clean": "rm build/app.js"
+    "clean": "rm -rf build"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/pheuter/essential-react",
   "devDependencies": {
     "coveralls": "^2.11.2",
+    "html-webpack-plugin": "^1.1.0",
     "istanbul": "^0.3.7",
     "istanbul-instrumenter-loader": "^0.1.2",
     "jquery": "^2.1.3",

@@ -13,14 +13,20 @@ handlers:
 - url : /api/admin/config/.*
   script : main.api
   login : admin
+  secure : always
 
 - url : /api/.*
   script : main.api
+  secure : always
 
 - url : /(.*?\.)(js|css|eot|woff2|woff|ttf|jpg|png|svg|gif)
   static_files : static/\1\2
   upload : static/.*
+  login : admin
+  secure : always
 
 - url : /.*
   static_files : static/index.html
   upload : static/index.html
+  login : admin
+  secure : always

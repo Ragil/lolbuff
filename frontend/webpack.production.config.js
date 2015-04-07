@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var webpack_loaders = require('./webpack.loaders');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  * This is the Webpack configuration file for production.
@@ -16,6 +17,14 @@ module.exports = {
   module: {
     loaders: webpack_loaders
   },
+
+  plugins : [
+    new HtmlWebpackPlugin({
+      filename : 'index.html',
+      template : './index.html',
+      hash : new Date().valueOf()
+    })
+  ],
 
   resolve: {
     root : path.resolve(__dirname, '.'),
