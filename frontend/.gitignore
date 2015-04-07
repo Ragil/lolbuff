@@ -1,13 +1,5 @@
 # Build
-build/app.js
-build/*.jpg
-build/*.png
-build/*.gif
-build/*.woff
-build/*.woff2
-build/*.eot
-build/*.svg
-build/*.ttf
+build/*
 
 # Logs
 logs
