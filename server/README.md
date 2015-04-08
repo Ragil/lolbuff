@@ -3,7 +3,7 @@
 * nosegae - pip install nosegae
 
 # env configs
-set lol_api_key=yourapikey
+export lol_api_key=yourapikey
 
 # Running test
 nosetests --with-gae --gae-lib-root=/dir/to/google_appengine
