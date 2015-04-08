@@ -36,12 +36,12 @@ module.exports = {
   // Necessary plugins for hot load
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename : 'index.html',
       template : './index.html',
       hash : new Date().valueOf()
     })
-    // new webpack.NoErrorsPlugin()
   ],
 
   // Transform source code using Babel and React Hot Loader

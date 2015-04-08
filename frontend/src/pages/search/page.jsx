@@ -8,15 +8,19 @@ export default class SearchPage extends React.Component {
     return (
       <div id="search-page" className="search-page">
         <div className="navbar navbar-fixed-top navbar-inverse">
-          <div className="search-page-bar row">
-            <div className="col-xs-4 col-sm-4 col-md-3 col-lg-3">
-              <a href="/">
-                <h4 className="search-page-title">League Buff</h4>
-              </a>
-            </div>
-            <div className="search-page-input col-xs-8 col-sm-8 col-md-9 col-lg-9">
-              <SearchComponent value={this.props.routestate.query['summoner_name']}
-                  region={this.props.routestate.query['region']} />
+          <div className="container">
+            <div className="search-page-bar row">
+              <div className="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                <a href="/">
+                  <h4 className="search-page-title">League Buff</h4>
+                </a>
+              </div>
+              <div className="search-page-input col-xs-8
+                  col-sm-8 col-md-9 col-lg-9">
+                <SearchComponent
+                    value={this.props.routestate.query['summoner_name']}
+                    region={this.props.routestate.query['region']} />
+              </div>
             </div>
           </div>
         </div>
